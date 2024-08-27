@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-    const targetUrl = 'https://www.tipminer.com/historico/blaze/double?limit=1500&t=1723641349463&subject=filter';
+    const targetUrl = 'https://historicosblaze.com/blaze/doubles';
     const url = proxyUrl + targetUrl;
     const resultadoDiv = document.getElementById('resultado');
     const fetchDataButton = document.getElementById('fetchData');
