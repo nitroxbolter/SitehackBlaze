@@ -218,19 +218,21 @@
             pagoCell.textContent = '?'; // Texto inicial
             pagoCell.className = 'pago-cell';
 
-            // Adiciona o evento de clique para a célula "Pago"
             pagoCell.addEventListener('click', function() {
-                if (pagoCell.textContent === 'Win') {
-                    pagoCell.textContent = 'Loss';
-                    pagoCell.style.backgroundColor = 'red';
-                    pagoCell.style.color = 'white';
-                } else {
-                    pagoCell.textContent = 'Win';
-                    pagoCell.style.backgroundColor = 'green';
-                    pagoCell.style.color = 'white';
-                }
-            });
-
+    if (pagoCell.textContent === 'Win') {
+        pagoCell.textContent = 'Loss';
+        pagoCell.style.backgroundColor = 'red';
+        pagoCell.style.color = 'white';
+    } else if (pagoCell.textContent === 'Loss') {
+        pagoCell.textContent = 'robou';
+        pagoCell.style.backgroundColor = 'orange';
+        pagoCell.style.color = 'black';
+    } else {
+        pagoCell.textContent = 'Win';
+        pagoCell.style.backgroundColor = 'green';
+        pagoCell.style.color = 'white';
+    }
+});
             // Verifica valores iguais nas colunas
             checkForEqualValues();
         }
