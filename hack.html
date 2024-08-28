@@ -271,28 +271,21 @@ function checkForEqualValues() {
     }
 }
 
-
-
-
-
-
-
-
-
-
         
        // função que calcula os resultados
-        function calculate() {
-            const input = prompt("Digite o número:");
-            if (input !== null && !isNaN(input)) {
-                const number = parseInt(input);
-                const result6 = number + 6;
-                const result10 = number + 10;
-                const result12 = number + 12;
+function calculate() {
+    const input = prompt("Digite o número:");
+    if (input !== null && !isNaN(input)) {
+        const number = parseInt(input);
+        
+        const result6 = (number + 6) % 60;
+        const result10 = (number + 10) % 60;
+        const result12 = (number + 12) % 60;
 
-                addRow(number, result6, result10, result12);
-            }
-        }
+        addRow(number, result6, result10, result12);
+    }
+}
+
 
         function clearTable() {
             const tableBody = document.getElementById("resultsTable").getElementsByTagName('tbody')[0];
