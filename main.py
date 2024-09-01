@@ -32,7 +32,7 @@ def martingale():
     global entrada
     entrada += 1
     if entrada <= max_gale:
-        bot.send_message(chat_id, text=f"⚠️ Gale {entrada} ⚠️")
+        bot.send_message(chat_id, text=f"?? Gale {entrada} ??")
     else:
         loss()
         reset()
@@ -47,24 +47,24 @@ def fetch_api():
 
 def win():
     global win_count
-    bot.send_message(chat_id, text="✅")
+    bot.send_message(chat_id, text="?")
     win_count += 1
 
 def loss():
     global loss_count
-    bot.send_message(chat_id, text="❌")
+    bot.send_message(chat_id, text="?")
     loss_count += 1
 
 def correcao(results, color):
-    if results[0:1] == ['P'] and color == '⚫️':
+    if results[0:1] == ['P'] and color == '??':
         win()
         reset()
-    elif results[0:1] == ['V'] and color == '🛑':
+    elif results[0:1] == ['V'] and color == '??':
         win()
         reset()
-    elif results[0:1] == ['P'] and color == '🛑':
+    elif results[0:1] == ['P'] and color == '??':
         martingale()
-    elif results[0:1] == ['V'] and color == '⚫️':
+    elif results[0:1] == ['V'] and color == '??':
         martingale()
     elif results[0:1] == ['B']:
         win()
@@ -72,15 +72,15 @@ def correcao(results, color):
 
 def enviar_sinal(cor, padrao):
     bot.send_message(chat_id, text=f'''
-🚨 Sinal encontrado 🚨
+?? Sinal encontrado ??
 
-⏯️ Padrão: {padrao}
+?? Padr�o: {padrao}
 
-💶 Entrar no {cor}
+?? Entrar no {cor}
 
-🦾 Proteger no ⚪️
+?? Proteger no ??
 
-🐓 2 martingale: (opcional)''')
+?? 2 martingale: (opcional)''')
 
 def estrategy(resultado):
     global analise_sinal
@@ -136,7 +136,7 @@ def martingale():
     global entrada
     entrada += 1
     if entrada <= max_gale:
-        bot.send_message(chat_id, text=f"⚠️ Gale {entrada} ⚠️")
+        bot.send_message(chat_id, text=f"?? Gale {entrada} ??")
     else:
         loss()
         reset()
@@ -151,24 +151,24 @@ def fetch_api():
 
 def win():
     global win_count
-    bot.send_message(chat_id, text="✅")
+    bot.send_message(chat_id, text="?")
     win_count += 1
 
 def loss():
     global loss_count
-    bot.send_message(chat_id, text="❌")
+    bot.send_message(chat_id, text="?")
     loss_count += 1
 
 def correcao(results, color):
-    if results[0:1] == ['P'] and color == '⚫️':
+    if results[0:1] == ['P'] and color == '??':
         win()
         reset()
-    elif results[0:1] == ['V'] and color == '🛑':
+    elif results[0:1] == ['V'] and color == '??':
         win()
         reset()
-    elif results[0:1] == ['P'] and color == '🛑':
+    elif results[0:1] == ['P'] and color == '??':
         martingale()
-    elif results[0:1] == ['V'] and color == '⚫️':
+    elif results[0:1] == ['V'] and color == '??':
         martingale()
     elif results[0:1] == ['B']:
         win()
@@ -176,15 +176,15 @@ def correcao(results, color):
 
 def enviar_sinal(cor, padrao):
     bot.send_message(chat_id, text=f'''
-🚨 Sinal encontrado 🚨
+?? Sinal encontrado ??
 
-⏯️ Padrão: {padrao}
+?? Padr�o: {padrao}
 
-💶 Entrar no {cor}
+?? Entrar no {cor}
 
-🦾 Proteger no ⚪️
+?? Proteger no ??
 
-🐓 2 martingale: (opcional)''')
+?? 2 martingale: (opcional)''')
 
 def estrategy(resultado):
     global analise_sinal
@@ -208,36 +208,36 @@ def estrategy(resultado):
         correcao(cores, cor_sinal)
     else:
         if cores[0:5] == ['P', 'V', 'V', 'V', 'V']:
-            cor_sinal = '🛑'
-            padrao = '🎯 Tiro Certo 🎯'
+            cor_sinal = '??'
+            padrao = '?? Tiro Certo ??'
             enviar_sinal(cor_sinal, padrao)
             analise_sinal = True
             print('Sinal enviado')
 
-        elif cores[0:4] == ['P', 'V', 'P', 'V']:
-            cor_sinal = '🛑'
-            padrao = '👻Ghost👻'
+        elif cores[0:4] == ['V', 'P']:
+            cor_sinal = '??'
+            padrao = '????Samurai2????'
             enviar_sinal(cor_sinal, padrao)
             analise_sinal = True
             print('Sinal enviado')
         
         elif cores[0:3] == ['V', 'P', 'V']:
-            cor_sinal = '⚫️'
-            padrao = '👑King👑'
+            cor_sinal = '??'
+            padrao = '??King??'
             enviar_sinal(cor_sinal, padrao)
             analise_sinal = True
             print('Sinal enviado')
         
         elif cores[0:2] == ['V', 'P']:
-            cor_sinal = '⚫️'
-            padrao = '🥷🏽Samurai🥷🏽'
+            cor_sinal = '??'
+            padrao = '????Samurai????'
             enviar_sinal(cor_sinal, padrao)
             analise_sinal = True
             print('Sinal enviado')
 
         elif cores[0:2] == ['B', 'V']:
-            cor_sinal = '🛑'
-            padrao = '🎯Sniper Branco🎯'
+            cor_sinal = '??'
+            padrao = '??Sniper Branco??'
             enviar_sinal(cor_sinal, padrao)
             analise_sinal = True
             print('Sinal enviado')
@@ -251,13 +251,13 @@ def start_monitoring():
         if resultado != check_resultado:
             check_resultado[:] = resultado  # Atualiza a lista check_resultado
             estrategy(resultado)
-        time.sleep(2)  # Pequeno intervalo entre as verificações
+        time.sleep(2)  # Pequeno intervalo entre as verifica��es
 
 def stop_monitoring():
     global running
     running = False
-    bot.send_message(chat_id, text=f"🏁 Encerramento da Sessão 🏁\n\n✅ Wins: {win_count}\n❌ Losses: {loss_count}\n\nObrigado por usar nosso serviço! Até a próxima sessão.")
-    print(f"Relatório:\nWins: {win_count}\nLosses: {loss_count}")
+    bot.send_message(chat_id, text=f"?? Encerramento da Sess�o ??\n\n? Wins: {win_count}\n? Losses: {loss_count}\n\nObrigado por usar nosso servi�o! At� a pr�xima sess�o.")
+    print(f"Relat�rio:\nWins: {win_count}\nLosses: {loss_count}")
 
 def main():
     while True:
@@ -267,14 +267,14 @@ def main():
                 monitoring_thread = threading.Thread(target=start_monitoring)
                 monitoring_thread.start()
             else:
-                print("O sistema já está em execução.")
+                print("O sistema j� est� em execu��o.")
         elif command == "parar":
             if running:
                 stop_monitoring()
             else:
-                print("O sistema já está parado.")
+                print("O sistema j� est� parado.")
         else:
-            print("Comando inválido. Use 'iniciar' para começar ou 'parar' para parar.")
+            print("Comando inv�lido. Use 'iniciar' para come�ar ou 'parar' para parar.")
 
 if __name__ == "__main__":
     main()
@@ -290,13 +290,13 @@ def start_monitoring():
         if resultado != check_resultado:
             check_resultado = resultado.copy()  # Atualize o valor de check_resultado
             estrategy(resultado)
-        time.sleep(2)  # Pequeno intervalo entre as verificações
+        time.sleep(2)  # Pequeno intervalo entre as verifica��es
 
 def stop_monitoring():
     global running
     running = False
-    bot.send_message(chat_id, text=f"🏁 Encerramento da Sessão 🏁\n\n✅ Wins: {win_count}\n❌ Losses: {loss_count}\n\nObrigado por usar nosso serviço! Até a próxima sessão.")
-    print(f"Relatório:\nWins: {win_count}\nLosses: {loss_count}")
+    bot.send_message(chat_id, text=f"?? Encerramento da Sess�o ??\n\n? Wins: {win_count}\n? Losses: {loss_count}\n\nObrigado por usar nosso servi�o! At� a pr�xima sess�o.")
+    print(f"Relat�rio:\nWins: {win_count}\nLosses: {loss_count}")
 
 def main():
     while True:
@@ -306,14 +306,14 @@ def main():
                 monitoring_thread = threading.Thread(target=start_monitoring)
                 monitoring_thread.start()
             else:
-                print("O sistema já está em execução.")
+                print("O sistema j� est� em execu��o.")
         elif command == "parar":
             if running:
                 stop_monitoring()
             else:
-                print("O sistema já está parado.")
+                print("O sistema j� est� parado.")
         else:
-            print("Comando inválido. Use 'iniciar' para começar ou 'parar' para parar.")
+            print("Comando inv�lido. Use 'iniciar' para come�ar ou 'parar' para parar.")
 
 if __name__ == "__main__":
     main()
