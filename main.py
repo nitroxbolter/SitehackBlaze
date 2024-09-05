@@ -7,7 +7,6 @@ import time
 
 # Token do bot
 api = "7277223979:AAFL1497sJw25z6L-rXuH96wzTa6uGZPJhk"  # Substitua pelo seu token do bot
-chat_id = "6045775620"  # Substitua pelo ID correto do grupo ou chat
 
 # Inicializa o bot
 bot = telebot.TeleBot(api)
@@ -25,6 +24,7 @@ loss_count = 0
 running = False
 selected_patterns = set()  # Armazenar IDs dos padrões selecionados
 user_type = None
+chat_id = None
 
 # Definição dos padrões com IDs
 patterns = {
@@ -120,7 +120,7 @@ def estrategy_bot(resultado):
     else:
         for num, pat in patterns.items():  # Itera sobre todos os padrões definidos
             if cores[:len(pat['pattern'])] == pat['pattern']:  # Verifica se o padrão da lista de cores corresponde a um padrão definido
-                cor_sinal = '🛑' if pat['pattern'][0] in ['P', 'V'] else '⚫️'  # Define a cor com base no primeiro elemento do padrão
+                cor_sinal = '⚫️' if pat['pattern'][0] in ['P', 'V'] else '⚪️'  # Define a cor com base no primeiro elemento do padrão
                 enviar_sinal(cor_sinal, pat['name'])  # Envia o sinal encontrado
                 analise_sinal = True
                 print(f'Sinal {pat["name"]} enviado')
@@ -149,7 +149,7 @@ def estrategy_adm(resultado):
     else:
         for num, pat in patterns.items():  # Itera sobre todos os padrões definidos
             if cores[:len(pat['pattern'])] == pat['pattern']:  # Verifica se o padrão da lista de cores corresponde a um padrão definido
-                cor_sinal = '🛑' if pat['pattern'][0] in ['P', 'V'] else '⚫️'  # Define a cor com base no primeiro elemento do padrão
+                cor_sinal = '⚫️' if pat['pattern'][0] in ['P', 'V'] else '⚪️'  # Define a cor com base no primeiro elemento do padrão
                 enviar_sinal(cor_sinal, pat['name'])  # Envia o sinal encontrado
                 analise_sinal = True
                 print(f'Sinal ADM {pat["name"]} enviado')
@@ -180,7 +180,7 @@ def estrategy_custom(resultado):
             if num in patterns:
                 pat = patterns[num]
                 if cores[:len(pat['pattern'])] == pat['pattern']:  # Verifica se o padrão da lista de cores corresponde a um padrão selecionado
-                    cor_sinal = '🛑' if pat['pattern'][0] in ['P', 'V'] else '⚫️'  # Define a cor com base no primeiro elemento do padrão
+                    cor_sinal = '⚫️' if pat['pattern'][0] in ['P', 'V'] else '⚪️'  # Define a cor com base no primeiro elemento do padrão
                     enviar_sinal(cor_sinal, pat['name'])  # Envia o sinal encontrado
                     analise_sinal = True
                     print(f'Sinal Custom {num} ({pat["name"]}) enviado')
@@ -212,37 +212,87 @@ def stop_monitoring():
 
 def choose_user_type():
     global user_type
+    print("\n============================")
+    print("Escolha o número referente ao perfil:")
+    print("1: [BOT]")
+    print("2: [ADM]")
+    print("3: [CUSTOM]")
+    print("============================")
     while True:
-        user = input("Qual usuário será usado? (BOT/ADM/CUSTOM): ").strip().upper()
-        if user in ["BOT", "ADM", "CUSTOM"]:
-            user_type = user
-            if user == "CUSTOM":
+        try:
+            choice = int(input("Digite o número do perfil desejado: ").strip())
+            if choice == 1:
+                user_type = "BOT"
+                break
+            elif choice == 2:
+                user_type = "ADM"
+                break
+            elif choice == 3:
+                user_type = "CUSTOM"
+                configure_custom_chat_id()
                 display_patterns()
                 configure_custom_patterns()
-            break
-        else:
-            print("Usuário inválido. Por favor, escolha 'BOT', 'ADM' ou 'CUSTOM'.")
+                break
+            else:
+                print("Número inválido. Por favor, escolha 1, 2 ou 3.")
+        except ValueError:
+            print("Entrada inválida. Por favor, insira um número.")
+
+def configure_custom_chat_id():
+    global chat_id
+    print("\n============================")
+    print("Escolha o chat_id para o perfil CUSTOM:")
+    print("1: Sala (ID: 98989898)")
+    print("2: ADM (ID: 6045775620)")
+    print("============================")
+    while True:
+        try:
+            choice = int(input("Digite o número do chat_id desejado: ").strip())
+            if choice == 1:
+                chat_id = 98989898
+                break
+            elif choice == 2:
+                chat_id = 6045775620
+                break
+            else:
+                print("Número inválido. Por favor, escolha 1 ou 2.")
+        except ValueError:
+            print("Entrada inválida. Por favor, insira um número.")
 
 def display_patterns():
-    print("\nPadrões disponíveis:")
+    print("\n============================")
+    print("Padrões disponíveis:")
     for num, pat in patterns.items():
-        print(f"ID {num}: {pat['name']}")
+        print(f"{num}: {pat['name']}")
+    print("============================")
 
 def configure_custom_patterns():
     global selected_patterns
-    print("Configure os padrões personalizados para o usuário CUSTOM.")
+    selected_patterns = set()
+    print("\nSelecione os padrões CUSTOM que deseja usar (separe os números por vírgula):")
     while True:
         try:
-            ids = input("Digite os IDs dos padrões separados por vírgula (ex: 1,2,4): ").strip()
-            selected_patterns = {int(id.strip()) for id in ids.split(',')}
-            if all(id in patterns for id in selected_patterns):
-                print(f"Padrões selecionados: {', '.join(map(str, selected_patterns))}")
+            choices = input("Digite os números dos padrões (ex.: 1,2,3): ").strip()
+            selected_patterns = {int(choice) for choice in choices.split(',')}
+            if selected_patterns.issubset(patterns.keys()):
                 break
             else:
-                print("IDs inválidos. Verifique e tente novamente.")
+                print("Um ou mais números não correspondem aos padrões disponíveis.")
         except ValueError:
-            print("Entrada inválida. Tente novamente com IDs numéricos.")
+            print("Entrada inválida. Por favor, insira números separados por vírgula.")
 
-if __name__ == '__main__':
-    choose_user_type()
-    start_monitoring()
+def main():
+    print("Digite um comando (start, finalizar):")
+    while True:
+        comando = input().strip().lower()
+        if comando == 'start':
+            choose_user_type()
+            threading.Thread(target=start_monitoring).start()
+        elif comando == 'finalizar':
+            stop_monitoring()
+            break
+        else:
+            print("Comando inválido. Por favor, digite 'start' ou 'finalizar'.")
+
+if __name__ == "__main__":
+    main()
