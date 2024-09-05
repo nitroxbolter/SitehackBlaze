@@ -11,7 +11,7 @@ api = "7277223979:AAFL1497sJw25z6L-rXuH96wzTa6uGZPJhk"  # Substitua pelo seu tok
 # Inicializa o bot
 bot = telebot.TeleBot(api)
 
-# VariÃ¡veis de controle
+# Variáveis de controle
 analise_sinal = False
 entrada = 0
 max_gale = 2  # Quantidade de gale que o bot vai mandar
@@ -22,16 +22,16 @@ check_resultado = []
 win_count = 0
 loss_count = 0
 running = False
-selected_patterns = set()  # Armazenar IDs dos padrÃµes selecionados
+selected_patterns = set()  # Armazenar IDs dos padrões selecionados
 user_type = None
 chat_id = None
 
-# DefiniÃ§Ã£o dos padrÃµes com IDs
+# Definição dos padrões com IDs
 patterns = {
-    1: {'name': 'ğŸ¥·ğŸ½ Samurai ğŸ¥·ğŸ½', 'pattern': ['V', 'P']},  # PadrÃ£o 1: V seguido de P
-    2: {'name': 'ğŸ¯ Tiro Certo ğŸ¯', 'pattern': ['P', 'V', 'V', 'V', 'V']},  # PadrÃ£o 2: P seguido de quatro V
-    3: {'name': 'ğŸ‘‘ King ğŸ‘‘', 'pattern': ['V', 'P', 'V']},  # PadrÃ£o 3: V, P, V
-    4: {'name': 'ğŸ¯ Sniper Branco ğŸ¯', 'pattern': ['B', 'V']}  # PadrÃ£o 4: B seguido de V
+    1: {'name': '???? Samurai ????', 'pattern': ['V', 'P']},  # Padrão 1: V seguido de P
+    2: {'name': '?? Tiro Certo ??', 'pattern': ['P', 'V', 'V', 'V', 'V']},  # Padrão 2: P seguido de quatro V
+    3: {'name': '?? King ??', 'pattern': ['V', 'P', 'V']},  # Padrão 3: V, P, V
+    4: {'name': '?? Sniper Branco ??', 'pattern': ['B', 'V']}  # Padrão 4: B seguido de V
 }
 
 def reset():
@@ -44,7 +44,7 @@ def martingale():
     global entrada
     entrada += 1
     if entrada <= max_gale:
-        bot.send_message(chat_id, text=f"âš ï¸ Gale {entrada} âš ï¸")
+        bot.send_message(chat_id, text=f"?? Gale {entrada} ??")
     else:
         loss()
         reset()
@@ -62,24 +62,24 @@ def fetch_api():
 
 def win():
     global win_count
-    bot.send_message(chat_id, text="âœ… VitÃ³ria!")
+    bot.send_message(chat_id, text="? Vitória!")
     win_count += 1
 
 def loss():
     global loss_count
-    bot.send_message(chat_id, text="âŒ Derrota!")
+    bot.send_message(chat_id, text="? Derrota!")
     loss_count += 1
 
 def correcao(results, color):
-    if results[0:1] == ['P'] and color == 'âš«ï¸':
+    if results[0:1] == ['P'] and color == '??':
         win()
         reset()
-    elif results[0:1] == ['V'] and color == 'ğŸ›‘':
+    elif results[0:1] == ['V'] and color == '??':
         win()
         reset()
-    elif results[0:1] == ['P'] and color == 'ğŸ›‘':
+    elif results[0:1] == ['P'] and color == '??':
         martingale()
-    elif results[0:1] == ['V'] and color == 'âš«ï¸':
+    elif results[0:1] == ['V'] and color == '??':
         martingale()
     elif results[0:1] == ['B']:
         win()
@@ -87,15 +87,15 @@ def correcao(results, color):
 
 def enviar_sinal(cor, padrao):
     bot.send_message(chat_id, text=f'''
-ğŸš¨ Sinal encontrado ğŸš¨
+?? Sinal encontrado ??
 
-â¯ï¸ PadrÃ£o: {padrao}
+?? Padrão: {padrao}
 
-ğŸ’¶ Entrar no {cor}
+?? Entrar no {cor}
 
-ğŸ¦¾ Proteger no âšªï¸
+?? Proteger no ??
 
-ğŸ“ 2 martingale: (opcional)''')
+?? 2 martingale: (opcional)''')
 
 def estrategy_bot(resultado):
     global analise_sinal
@@ -118,9 +118,9 @@ def estrategy_bot(resultado):
     if analise_sinal:
         correcao(cores, cor_sinal)
     else:
-        for num, pat in patterns.items():  # Itera sobre todos os padrÃµes definidos
-            if cores[:len(pat['pattern'])] == pat['pattern']:  # Verifica se o padrÃ£o da lista de cores corresponde a um padrÃ£o definido
-                cor_sinal = 'âš«ï¸' if pat['pattern'][0] in ['P', 'V'] else 'âšªï¸'  # Define a cor com base no primeiro elemento do padrÃ£o
+        for num, pat in patterns.items():  # Itera sobre todos os padrões definidos
+            if cores[:len(pat['pattern'])] == pat['pattern']:  # Verifica se o padrão da lista de cores corresponde a um padrão definido
+                cor_sinal = '??' if pat['pattern'][0] in ['P', 'V'] else '??'  # Define a cor com base no primeiro elemento do padrão
                 enviar_sinal(cor_sinal, pat['name'])  # Envia o sinal encontrado
                 analise_sinal = True
                 print(f'Sinal {pat["name"]} enviado')
@@ -147,9 +147,9 @@ def estrategy_adm(resultado):
     if analise_sinal:
         correcao(cores, cor_sinal)
     else:
-        for num, pat in patterns.items():  # Itera sobre todos os padrÃµes definidos
-            if cores[:len(pat['pattern'])] == pat['pattern']:  # Verifica se o padrÃ£o da lista de cores corresponde a um padrÃ£o definido
-                cor_sinal = 'âš«ï¸' if pat['pattern'][0] in ['P', 'V'] else 'âšªï¸'  # Define a cor com base no primeiro elemento do padrÃ£o
+        for num, pat in patterns.items():  # Itera sobre todos os padrões definidos
+            if cores[:len(pat['pattern'])] == pat['pattern']:  # Verifica se o padrão da lista de cores corresponde a um padrão definido
+                cor_sinal = '??' if pat['pattern'][0] in ['P', 'V'] else '??'  # Define a cor com base no primeiro elemento do padrão
                 enviar_sinal(cor_sinal, pat['name'])  # Envia o sinal encontrado
                 analise_sinal = True
                 print(f'Sinal ADM {pat["name"]} enviado')
@@ -176,11 +176,11 @@ def estrategy_custom(resultado):
     if analise_sinal:
         correcao(cores, cor_sinal)
     else:
-        for num in selected_patterns:  # Itera sobre os padrÃµes selecionados para o usuÃ¡rio CUSTOM
+        for num in selected_patterns:  # Itera sobre os padrões selecionados para o usuário CUSTOM
             if num in patterns:
                 pat = patterns[num]
-                if cores[:len(pat['pattern'])] == pat['pattern']:  # Verifica se o padrÃ£o da lista de cores corresponde a um padrÃ£o selecionado
-                    cor_sinal = 'âš«ï¸' if pat['pattern'][0] in ['P', 'V'] else 'âšªï¸'  # Define a cor com base no primeiro elemento do padrÃ£o
+                if cores[:len(pat['pattern'])] == pat['pattern']:  # Verifica se o padrão da lista de cores corresponde a um padrão selecionado
+                    cor_sinal = '??' if pat['pattern'][0] in ['P', 'V'] else '??'  # Define a cor com base no primeiro elemento do padrão
                     enviar_sinal(cor_sinal, pat['name'])  # Envia o sinal encontrado
                     analise_sinal = True
                     print(f'Sinal Custom {num} ({pat["name"]}) enviado')
@@ -201,26 +201,26 @@ def start_monitoring():
                 estrategy_adm(resultado)
             elif user_type == "CUSTOM":
                 estrategy_custom(resultado)
-        time.sleep(2)  # Pequeno intervalo entre as verificaÃ§Ãµes
+        time.sleep(2)  # Pequeno intervalo entre as verificações
 
 def stop_monitoring():
     global running
     running = False
-    bot.send_message(chat_id, text=f"ğŸ Encerramento da SessÃ£o ğŸ\n\nâœ… Wins: {win_count}\nâŒ Losses: {loss_count}\n\nObrigado por usar nosso serviÃ§o! AtÃ© a prÃ³xima sessÃ£o.")
-    print(f"RelatÃ³rio:\nWins: {win_count}\nLosses: {loss_count}")
+    bot.send_message(chat_id, text=f"?? Encerramento da Sessão ??\n\n? Wins: {win_count}\n? Losses: {loss_count}\n\nObrigado por usar nosso serviço! Até a próxima sessão.")
+    print(f"Relatório:\nWins: {win_count}\nLosses: {loss_count}")
     time.sleep(5)  # Aguardar 5 segundos antes de encerrar o sistema
 
 def choose_user_type():
     global user_type
     print("\n============================")
-    print("Escolha o nÃºmero referente ao perfil:")
+    print("Escolha o número referente ao perfil:")
     print("1: [BOT]")
     print("2: [ADM]")
     print("3: [CUSTOM]")
     print("============================")
     while True:
         try:
-            choice = int(input("Digite o nÃºmero do perfil desejado: ").strip())
+            choice = int(input("Digite o número do perfil desejado: ").strip())
             if choice == 1:
                 user_type = "BOT"
                 break
@@ -234,9 +234,9 @@ def choose_user_type():
                 configure_custom_patterns()
                 break
             else:
-                print("NÃºmero invÃ¡lido. Por favor, escolha 1, 2 ou 3.")
+                print("Número inválido. Por favor, escolha 1, 2 ou 3.")
         except ValueError:
-            print("Entrada invÃ¡lida. Por favor, insira um nÃºmero.")
+            print("Entrada inválida. Por favor, insira um número.")
 
 def configure_custom_chat_id():
     global chat_id
@@ -247,7 +247,7 @@ def configure_custom_chat_id():
     print("============================")
     while True:
         try:
-            choice = int(input("Digite o nÃºmero do chat_id desejado: ").strip())
+            choice = int(input("Digite o número do chat_id desejado: ").strip())
             if choice == 1:
                 chat_id = 98989898
                 break
@@ -255,13 +255,13 @@ def configure_custom_chat_id():
                 chat_id = 6045775620
                 break
             else:
-                print("NÃºmero invÃ¡lido. Por favor, escolha 1 ou 2.")
+                print("Número inválido. Por favor, escolha 1 ou 2.")
         except ValueError:
-            print("Entrada invÃ¡lida. Por favor, insira um nÃºmero.")
+            print("Entrada inválida. Por favor, insira um número.")
 
 def display_patterns():
     print("\n============================")
-    print("PadrÃµes disponÃ­veis:")
+    print("Padrões disponíveis:")
     for num, pat in patterns.items():
         print(f"{num}: {pat['name']}")
     print("============================")
@@ -269,17 +269,17 @@ def display_patterns():
 def configure_custom_patterns():
     global selected_patterns
     selected_patterns = set()
-    print("\nSelecione os padrÃµes CUSTOM que deseja usar (separe os nÃºmeros por vÃ­rgula):")
+    print("\nSelecione os padrões CUSTOM que deseja usar (separe os números por vírgula):")
     while True:
         try:
-            choices = input("Digite os nÃºmeros dos padrÃµes (ex.: 1,2,3): ").strip()
+            choices = input("Digite os números dos padrões (ex.: 1,2,3): ").strip()
             selected_patterns = {int(choice) for choice in choices.split(',')}
             if selected_patterns.issubset(patterns.keys()):
                 break
             else:
-                print("Um ou mais nÃºmeros nÃ£o correspondem aos padrÃµes disponÃ­veis.")
+                print("Um ou mais números não correspondem aos padrões disponíveis.")
         except ValueError:
-            print("Entrada invÃ¡lida. Por favor, insira nÃºmeros separados por vÃ­rgula.")
+            print("Entrada inválida. Por favor, insira números separados por vírgula.")
 
 def main():
     print("Digite um comando (start, finalizar):")
@@ -292,7 +292,7 @@ def main():
             stop_monitoring()
             break
         else:
-            print("Comando invÃ¡lido. Por favor, digite 'start' ou 'finalizar'.")
+            print("Comando inválido. Por favor, digite 'start' ou 'finalizar'.")
 
 if __name__ == "__main__":
     main()
