@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import requests
 import json
 import telebot
@@ -74,7 +75,7 @@ def enviar_sinal(cor, padrao):
     bot.send_message(chat_id, text=f'''
 ?? Sinal encontrado ??
 
-?? Padrão: {padrao}
+?? Padrï¿½o: {padrao}
 
 ?? Entrar no {cor}
 
@@ -110,7 +111,7 @@ import time
 
 # Token do bot
 api = "7277223979:AAFL1497sJw25z6L-rXuH96wzTa6uGZPJhk"  # Substitua pelo seu token do bot
-chat_id = "-1002217215777"  # Substitua pelo ID correto do grupo ou chat 6045775620 edu chat -1002217215777
+chat_id = "6045775620"  # Substitua pelo ID correto do grupo ou chat 6045775620 edu chat -1002217215777
 
 # Inicializa o bot
 bot = telebot.TeleBot(api)
@@ -178,7 +179,7 @@ def enviar_sinal(cor, padrao):
     bot.send_message(chat_id, text=f'''
 ?? Sinal encontrado ??
 
-?? Padrão: {padrao}
+?? Padrï¿½o: {padrao}
 
 ?? Entrar no {cor}
 
@@ -251,13 +252,13 @@ def start_monitoring():
         if resultado != check_resultado:
             check_resultado[:] = resultado  # Atualiza a lista check_resultado
             estrategy(resultado)
-        time.sleep(2)  # Pequeno intervalo entre as verificações
+        time.sleep(2)  # Pequeno intervalo entre as verificaï¿½ï¿½es
 
 def stop_monitoring():
     global running
     running = False
-    bot.send_message(chat_id, text=f"?? Encerramento da Sessão ??\n\n? Wins: {win_count}\n? Losses: {loss_count}\n\nObrigado por usar nosso serviço! Até a próxima sessão.")
-    print(f"Relatório:\nWins: {win_count}\nLosses: {loss_count}")
+    bot.send_message(chat_id, text=f"?? Encerramento da Sessï¿½o ??\n\n? Wins: {win_count}\n? Losses: {loss_count}\n\nObrigado por usar nosso serviï¿½o! Atï¿½ a prï¿½xima sessï¿½o.")
+    print(f"Relatï¿½rio:\nWins: {win_count}\nLosses: {loss_count}")
 
 def main():
     while True:
@@ -267,14 +268,14 @@ def main():
                 monitoring_thread = threading.Thread(target=start_monitoring)
                 monitoring_thread.start()
             else:
-                print("O sistema já está em execução.")
+                print("O sistema jï¿½ estï¿½ em execuï¿½ï¿½o.")
         elif command == "parar":
             if running:
                 stop_monitoring()
             else:
-                print("O sistema já está parado.")
+                print("O sistema jï¿½ estï¿½ parado.")
         else:
-            print("Comando inválido. Use 'iniciar' para começar ou 'parar' para parar.")
+            print("Comando invï¿½lido. Use 'iniciar' para comeï¿½ar ou 'parar' para parar.")
 
 if __name__ == "__main__":
     main()
@@ -290,13 +291,13 @@ def start_monitoring():
         if resultado != check_resultado:
             check_resultado = resultado.copy()  # Atualize o valor de check_resultado
             estrategy(resultado)
-        time.sleep(2)  # Pequeno intervalo entre as verificações
+        time.sleep(2)  # Pequeno intervalo entre as verificaï¿½ï¿½es
 
 def stop_monitoring():
     global running
     running = False
-    bot.send_message(chat_id, text=f"?? Encerramento da Sessão ??\n\n? Wins: {win_count}\n? Losses: {loss_count}\n\nObrigado por usar nosso serviço! Até a próxima sessão.")
-    print(f"Relatório:\nWins: {win_count}\nLosses: {loss_count}")
+    bot.send_message(chat_id, text=f"?? Encerramento da Sessï¿½o ??\n\n? Wins: {win_count}\n? Losses: {loss_count}\n\nObrigado por usar nosso serviï¿½o! Atï¿½ a prï¿½xima sessï¿½o.")
+    print(f"Relatï¿½rio:\nWins: {win_count}\nLosses: {loss_count}")
 
 def main():
     while True:
@@ -306,14 +307,14 @@ def main():
                 monitoring_thread = threading.Thread(target=start_monitoring)
                 monitoring_thread.start()
             else:
-                print("O sistema já está em execução.")
+                print("O sistema jï¿½ estï¿½ em execuï¿½ï¿½o.")
         elif command == "parar":
             if running:
                 stop_monitoring()
             else:
-                print("O sistema já está parado.")
+                print("O sistema jï¿½ estï¿½ parado.")
         else:
-            print("Comando inválido. Use 'iniciar' para começar ou 'parar' para parar.")
+            print("Comando invï¿½lido. Use 'iniciar' para comeï¿½ar ou 'parar' para parar.")
 
 if __name__ == "__main__":
     main()
