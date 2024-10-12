@@ -298,6 +298,10 @@ function calculate() {
             document.body.classList.toggle('dark-theme');
             document.querySelector('.theme-toggle').classList.toggle('transparent');
         }
+
+        function openGenPage() {
+            window.open('gen.html', 'Gerenciamento', 'width=600,height=400');
+        }
     </script>
 </head>
 <body>
@@ -306,9 +310,7 @@ function calculate() {
         <table>
             <thead>
                 <tr>
-                    <th><a href="#">Item 1</a></th>
-                    <th><a href="#">Item 2</a></th>
-                    <th><a href="#">Item 3</a></th>
+                    <td><a href="#" onclick="openGenPage()">Gerenciamento</a></td>
                 </tr>
             </thead>
         </table>
