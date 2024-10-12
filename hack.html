@@ -9,7 +9,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-image: url('https://img.odcdn.com.br/wp-content/uploads/2021/01/iStock-912299634_Easy-Resize.com_.jpg');
+            background-image: url('https://media1.tenor.com/m/60s1c6i6PpYAAAAC/wearelegend.gif');
             background-size: cover;
             background-position: center;
             color: #000000;
@@ -27,6 +27,25 @@
             overflow-y: auto;
             padding: 10px;
             transition: background-color 0.3s, color 0.3s;
+            text-align: center; /* Adicionado para centralizar o texto */
+        }
+        
+        .menu ul {
+            list-style-type: none; /* Remove a bolinha da lista */
+            padding: 0; /* Remove o padding padrão */
+        }
+        .menu li {
+            margin-bottom: 10px; /* Adiciona espaçamento entre os itens */
+        }
+        .menu a {
+            text-decoration: none;
+            color: #0056b3;
+            display: block;
+            padding: 10px;
+            border-radius: 5px; /* Adiciona borda arredondada aos links */
+        }
+        .menu a:hover {
+            background-color: #e9ecef;
         }
         .menu table {
             width: 100%;
@@ -302,22 +321,24 @@ function calculate() {
         function openGenPage() {
             window.open('gen.html', 'Gerenciamento', 'width=600,height=400');
         }
+        function openPage() {
+            window.open('mentoria.pdf', 'Mentoria', 'width=600,height=400');
+        }
     </script>
 </head>
 <body>
     <div class="menu">
         <h2>Menu</h2>
-        <table>
-            <thead>
-                <tr>
-                    <td><a href="#" onclick="openGenPage()">Gerenciamento</a></td>
-                </tr>
-            </thead>
-        </table>
+        <ul>
+            <li><a href="#" onclick="openGenPage()">Gerenciamento</a></li>
+            <li><a href="#" onclick="openPage()">Mentoria</a></li>
+        </ul>
     </div>
+    
+    
     <div class="main-content">
         <div class="frame">
-            <h1>Hack Edu 02 da blaze</h1>
+            <h1>White Hunter 14</h1>
             <button onclick="calculate()">Calcular</button>
             <button onclick="clearTable()">Limpar</button>
             <table id="resultsTable" class="results-table">
