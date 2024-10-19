@@ -1,7 +1,0 @@
-Instala as bibliotecas requests, json, telebot, pytelegramapi
-
-pip install requests 
-pip install json
-pip install pytelegrambotapi
-pip install telebot
-edu foda
