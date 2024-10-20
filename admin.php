@@ -43,6 +43,8 @@ $result = $conn->query($sql);
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            background-color: #001f3f; /* Azul escuro */
+            color: white; /* Texto branco para contraste */
         }
         table {
             width: 100%;
@@ -51,10 +53,11 @@ $result = $conn->query($sql);
         th, td {
             border: 1px solid #ddd;
             padding: 8px;
-            text-align: left;
+            text-align: center; /* Centraliza o texto nas células da tabela */
         }
         th {
             background-color: #f2f2f2;
+            color: black; /* Cor do texto das cabeçalhos */
         }
         .message {
             margin: 20px 0;
@@ -73,6 +76,20 @@ $result = $conn->query($sql);
         .top-bar a:hover {
             background-color: #45a049;
         }
+        h1 {
+            text-align: center; /* Centraliza o texto do título */
+        }
+        button {
+            background-color: red; /* Cor de fundo dos botões "Atualizar" */
+            color: white; /* Cor do texto dos botões */
+            border: none; /* Remove bordas */
+            padding: 10px 15px; /* Adiciona padding */
+            border-radius: 5px; /* Bordas arredondadas */
+            cursor: pointer; /* Muda o cursor para pointer */
+        }
+        button:hover {
+            opacity: 0.8; /* Efeito de hover nos botões */
+        }
     </style>
 </head>
 <body>
@@ -80,7 +97,7 @@ $result = $conn->query($sql);
         <a href="main.php">Home</a>
     </div>
     <h1>Painel de Administração</h1>
-    <div class="message">Usuários Cadastrados:</div>
+    <div class="message">Usuários:</div>
     
     <table>
         <thead>
