@@ -24,7 +24,7 @@
 <ul dir="auto">
 <li>Blocks da api da blaze.</li>
 <li>Novos emojis.</li>
-<li>Nome do padrão dos sinais.</li>
+<li>Nome do padrão dos sinais..</li>
 </ul>
 </li>
 </ul>
