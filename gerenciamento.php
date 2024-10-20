@@ -13,7 +13,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #4d4545;
+            background-color: #0a0a0a;
         }
         .container {
             border: 1px solid #ccc;
@@ -92,6 +92,7 @@
             width: 100%; /* Largura total da tabela */
             border-collapse: collapse;
             font-size: 0.7em;
+            background-color: #242121;
         }
         table, th, td {
             border: 1px solid black;
@@ -99,6 +100,7 @@
         th, td {
             padding: 5px;
             text-align: center;
+            color: white;
         }
         #resultTable1, #resultTable2 {
             display: none;
@@ -148,125 +150,97 @@
         <div class="alert" id="alertMessage"></div> <!-- Mensagem de alerta -->
         <div class="profit-banner" id="profitMessage"></div> <!-- Tarja verde para lucro -->
         <div class="profit-banner" id="profit30DaysMessage"></div> <!-- Tarja verde para lucro 30 dias -->
+        <div class="profit-banner" id="totalProfitMessage"></div> <!-- Tarja verde para lucro total da meta de brancos -->
 
         <div class="tables-container">
-            <table id="resultTable1">
-                <thead>
-                    <tr>
-                        <th>Entrada</th>
-                        <th>Aposta (R$)</th>
-                        <th>Total Acumulado (R$)</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-            <table id="resultTable2">
-                <thead>
-                    <tr>
-                        <th>Entrada</th>
-                        <th>Aposta (R$)</th>
-                        <th>Total Acumulado (R$)</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
-    </div>
+    <table id="resultTable1">
+        <thead>
+            <tr>
+                <th>Entrada</th>
+                <th>Aposta (R$)</th>
+                <th>Total Acumulado (R$)</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
 
-    <script>
-        function calcularTabela() {
-            const banca = parseFloat(document.getElementById('banca').value);
-            const entradas = parseInt(document.getElementById('entradas').value);
-            const brancos = parseInt(document.getElementById('brancos').value); // Novo campo para brancos
-            const multiplicador = 1.08;
 
-            let tableBody1 = document.querySelector('#resultTable1 tbody');
-            let tableBody2 = document.querySelector('#resultTable2 tbody');
-            tableBody1.innerHTML = ''; // Limpa a tabela 1
-            tableBody2.innerHTML = ''; // Limpa a tabela 2
-            document.getElementById('alertMessage').innerText = ''; // Limpa a mensagem de alerta
-            document.getElementById('profitMessage').style.display = 'none'; // Oculta a tarja verde inicialmente
-            document.getElementById('profit30DaysMessage').style.display = 'none'; // Oculta a tarja verde de lucro 30 dias
+<script>
+    function calcularTabela() {
+        const banca = parseFloat(document.getElementById('banca').value);
+        const entradas = parseInt(document.getElementById('entradas').value);
+        const brancos = parseInt(document.getElementById('brancos').value); // Novo campo para brancos
+        const multiplicador = 1.08;
 
-            let aposta = banca / ((Math.pow(multiplicador, entradas) - 1) / (multiplicador - 1));
-            let total = 0;
+        let tableBody1 = document.querySelector('#resultTable1 tbody');
+        tableBody1.innerHTML = ''; // Limpa a tabela
+        document.getElementById('alertMessage').innerText = ''; // Limpa a mensagem de alerta
+        document.getElementById('profitMessage').style.display = 'none'; // Oculta a tarja verde inicialmente
+        document.getElementById('profit30DaysMessage').style.display = 'none'; // Oculta a tarja verde de lucro 30 dias
+        document.getElementById('totalProfitMessage').style.display = 'none'; // Oculta a tarja verde de lucro total da meta de brancos
 
-            if (aposta < 0.20) {
-                document.getElementById('alertMessage').innerText = 'A banca não suporta o valor mínimo de entrada de R$ 0,20.';
-                return; // Sai da função se a aposta for menor que 0.20
-            }
+        let aposta = banca / ((Math.pow(multiplicador, entradas) - 1) / (multiplicador - 1));
+        let total = 0;
 
-            for (let i = 1; i <= entradas; i++) {
-                if (total + aposta > banca) {
-                    let row = document.createElement('tr');
-                    row.innerHTML = `<td colspan="3">Excedeu a banca</td>`;
-                    if (i <= Math.ceil(entradas / 2)) {
-                        tableBody1.appendChild(row);
-                    } else {
-                        tableBody2.appendChild(row);
-                    }
-                    break;
-                }
-
-                total += aposta;
-
-                let row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${i}</td>
-                    <td>${aposta.toFixed(2)}</td>
-                    <td>${total.toFixed(2)}</td>
-                `;
-                if (i <= Math.ceil(entradas / 2)) {
-                    tableBody1.appendChild(row);
-                } else {
-                    tableBody2.appendChild(row);
-                }
-
-                aposta *= multiplicador;
-            }
-
-            if (total <= banca) {
-                let row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${entradas + 1}</td>
-                    <td>${(total * 0.08).toFixed(2)}</td>
-                    <td>${(total + total * 0.08).toFixed(2)}</td>
-                `;
-
-                if (entradas + 1 <= Math.ceil(entradas / 2)) {
-                    tableBody1.appendChild(row);
-                } else {
-                    tableBody2.appendChild(row);
-                }
-                total += total * 0.08;
-            }
-
-            document.getElementById('resultTable1').style.display = 'table'; // Exibe a tabela 1
-            document.getElementById('resultTable2').style.display = 'table'; // Exibe a tabela 2
-
-            let brancosTotal = (total - (total / 1.08)) * brancos; // Cálculo do lucro com base nos brancos
-            let profitMessage = `Com uma banca de R$${banca.toFixed(2)} e uma meta de ${brancos} brancos, seu lucro esperado é de R$${brancosTotal.toFixed(2)}.`;
-            document.getElementById('profitMessage').innerText = profitMessage; // Exibe a mensagem de lucro
-            document.getElementById('profitMessage').style.display = 'block'; // Exibe a tarja verde para lucro
-
-            let profit30Days = brancosTotal * 30; // Cálculo do lucro em 30 dias
-            let profit30DaysMessage = `Lucro esperado em 30 dias: R$${profit30Days.toFixed(2)}.`;
-            document.getElementById('profit30DaysMessage').innerText = profit30DaysMessage; // Exibe a mensagem de lucro em 30 dias
-            document.getElementById('profit30DaysMessage').style.display = 'block'; // Exibe a tarja verde para lucro 30 dias
+        if (aposta < 0.20) {
+            document.getElementById('alertMessage').innerText = 'A banca não suporta o valor mínimo de entrada de R$ 0,20.';
+            return; // Sai da função se a aposta for menor que 0.20
         }
 
-        function limparTabela() {
-            document.getElementById('banca').value = '';
-            document.getElementById('entradas').value = '';
-            document.getElementById('brancos').value = '0'; // Limpa o campo de brancos para zero
-            document.querySelector('#resultTable1 tbody').innerHTML = '';
-            document.querySelector('#resultTable2 tbody').innerHTML = '';
-            document.getElementById('resultTable1').style.display = 'none';
-            document.getElementById('resultTable2').style.display = 'none';
-            document.getElementById('alertMessage').innerText = '';
-            document.getElementById('profitMessage').style.display = 'none';
-            document.getElementById('profit30DaysMessage').style.display = 'none';
+        for (let i = 1; i <= entradas; i++) {
+            if (total + aposta > banca) {
+                let row = document.createElement('tr');
+                row.innerHTML = `<td colspan="3">Excedeu a banca</td>`;
+                tableBody1.appendChild(row);
+                break;
+            }
+
+            total += aposta;
+
+            let row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${i}</td>
+                <td>${aposta.toFixed(2)}</td>
+                <td>${total.toFixed(2)}</td>
+            `;
+
+            tableBody1.appendChild(row);
+            aposta *= multiplicador;
         }
-    </script>
+
+        document.getElementById('resultTable1').style.display = 'table';
+
+        // Cálculo do lucro por brancos
+        const lucroPorBranco = (parseFloat(document.getElementById('banca').value) / ((Math.pow(multiplicador, entradas) - 1) / (multiplicador - 1))) * 14;
+
+        // Cálculo do lucro total pela meta de brancos
+        const totalLucroMetaBrancos = lucroPorBranco * brancos;
+
+        // Cálculo do lucro estimado em 30 dias com base no lucro total da meta
+        const lucro30Dias = totalLucroMetaBrancos * 30; // Aqui você calcula o lucro total da meta x 30 dias
+
+        document.getElementById('profitMessage').innerText = `Lucro por branco: R$ ${lucroPorBranco.toFixed(2)}`;
+        document.getElementById('profitMessage').style.display = 'block';
+        document.getElementById('profit30DaysMessage').innerText = `Lucro estimado em 30 dias: R$ ${lucro30Dias.toFixed(2)}`;
+        document.getElementById('profit30DaysMessage').style.display = 'block';
+        document.getElementById('totalProfitMessage').innerText = `Lucro total pela meta de brancos: R$ ${totalLucroMetaBrancos.toFixed(2)}`;
+        document.getElementById('totalProfitMessage').style.display = 'block';
+    }
+
+    function limparTabela() {
+        document.getElementById('banca').value = '';
+        document.getElementById('entradas').value = '';
+        document.getElementById('brancos').value = 0; // Limpa o campo de brancos
+        document.getElementById('resultTable1').style.display = 'none';
+        document.querySelector('#resultTable1 tbody').innerHTML = '';
+        document.getElementById('alertMessage').innerText = '';
+        document.getElementById('profitMessage').style.display = 'none'; // Oculta a tarja verde
+        document.getElementById('profit30DaysMessage').style.display = 'none'; // Oculta a tarja verde de lucro 30 dias
+        document.getElementById('totalProfitMessage').style.display = 'none'; // Oculta a tarja verde de lucro total da meta de brancos
+    }
+</script>
+
+
 </body>
 </html>
